@@ -1,7 +1,6 @@
 {
     "name": "CarloNicora/cryogen/mySqlCryogen",
     "description": "mySqlCryogen is a plugin to manage MySql databases with cryogen",
-    "version": "1.0.0",
     "type": "library",
     "keywords": ["cryogen", "php", "database", "persistency layer", "persistency", "MySql"],
     "homepage": "http://carlonicora.com",
