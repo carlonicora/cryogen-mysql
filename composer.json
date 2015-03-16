@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "CarloNicora\\cryogen\\mySqlCryogen\\": "src/"
+            "CarloNicora\\mySqlCryogen\\": "src/"
         }
     },
     "repositories": [
