@@ -16,21 +16,24 @@
  *
  * @license Apache
  * @license http://www.apache.org/licenses/LICENSE-2.0
- * @package CarloNicora\cryogen
  * @author Carlo Nicora
  */
 
 namespace CarloNicora\cryogen\mySqlCryogen;
 
 use CarloNicora\cryogen\connectionController;
+use CarloNicora\cryogen\cryogenException;
 use mysqli;
 
+/**
+ * Implementation of the connection controller for MySql
+ *
+ * @package CarloNicora\cryogen\mySqlCryogen
+ */
 class mySqlConnectionController extends connectionController{
-
     /**
-     * @var mysqli
+     * @var mysqli $this->connection
      */
-    public $connection;
 
     /**
      * Stores the connection details in the connection controller and opens the connection to the database
@@ -43,58 +46,90 @@ class mySqlConnectionController extends connectionController{
 
         $returnValue = $this->connect();
 
-        $this->isConnected = $returnValue;
-
         return($returnValue);
     }
 
+    /**
+     * Opens a connection to the database
+     *
+     * @return bool
+     */
     public function connect(){
-        $returnValue = TRUE;
+        $returnValue = true;
 
         if (!isset($this->connection)) {
-
             if (isset($this->connectionString[3])){
-                @$this->connection = new \mysqli($this->connectionString[0], $this->connectionString[1], $this->connectionString[2], $this->connectionString[3]);
+                @$this->connection = new mysqli($this->connectionString[0], $this->connectionString[1], $this->connectionString[2], $this->connectionString[3]);
             } else {
-                @$this->connection = new \mysqli($this->connectionString[0], $this->connectionString[1], $this->connectionString[2]);
+                @$this->connection = new mysqli($this->connectionString[0], $this->connectionString[1], $this->connectionString[2]);
             }
-
         } else {
-            @$thread = $this->connection->thread_id;
-            if (!isset($thread)) {
+            if (!isset($this->connection->thread_id)) {
                 if (isset($this->connectionString[3])) {
                     @$this->connection->connect($this->connectionString[0], $this->connectionString[1], $this->connectionString[2], $this->connectionString[3]);
                 } else {
                     @$this->connection->connect($this->connectionString[0], $this->connectionString[1], $this->connectionString[2]);
                 }
             }
-            unset($thread);
         }
 
-        if (mysqli_connect_errno()) {
-            $this->cryogen->log("Cannot connect to the database: " . mysqli_connect_error(), E_USER_ERROR, TRUE);
-            $returnValue = FALSE;
+        if ($this->connection->connect_error) {
+            $exception = new cryogenException(cryogenException::FAILURE_CREATING_DATABASE_CONNECTION, 'Connect Error: '. $this->connection->connect_errno.'-'.$this->connection->connect_error);
+            $exception->log();
+            $returnValue = false;
         } else {
-            $this->connection->autocommit(FALSE);
+            $this->connection->autocommit(false);
         }
 
         return($returnValue);
     }
 
+    /**
+     * Closes a connection to the database
+     *
+     * @return bool
+     */
     public function disconnect(){
-        if(isset($this->connection) && isset($this->connection->thread_id)){
+        if($this->isConnected()){
             $this->connection->close();
         }
     }
 
+    /**
+     * Returns the name of the database specified in the connection
+     *
+     * @return string
+     */
     public function getDatabaseName(){
         return($this->connectionString[3]);
     }
 
+    /**
+     * Create a new Database
+     *
+     * @param string $databaseName
+     * @return bool
+     */
     public function createDatabase($databaseName){
-        if ($this->connection->query("CREATE DATABASE " . $databaseName) === TRUE) {
-            $this->connection->select_db($databaseName);
+        $returnValue = false;
+
+        if($this->isConnected()){
+            if ($this->connection->query("CREATE DATABASE " . $databaseName) === true) {
+                $this->connection->select_db($databaseName);
+                $returnValue = true;
+            }
         }
+
+        return($returnValue);
+    }
+
+    /**
+     * Identifies if there is an active connection to the database
+     *
+     * @return bool
+     */
+    public function isConnected(){
+        return(isset($this->connection) && isset($this->connection->thread_id));
     }
 }
 ?>

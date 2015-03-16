@@ -277,8 +277,6 @@ class mySqlDataController extends dataController{
     protected function setActionTransaction($sqlStatement, $sqlParameters, &$generatedId = FALSE, $isDelete = FALSE){
         $returnValue = FALSE;
 
-        $this->cryogen->logScript($sqlStatement, $sqlParameters);
-
         if ($stmt = $this->connectionController->connection->prepare($sqlStatement)) {
             if (isset($sqlParameters) && sizeof($sqlParameters) > 0){
                 $this->bindParameters($stmt, $sqlParameters);
@@ -323,8 +321,6 @@ class mySqlDataController extends dataController{
     protected function setReadTransaction(queryEngine $engine, $sqlStatement, $sqlParameters){
         $returnValue = new entityList();
 
-        $this->cryogen->logScript($sqlStatement, $sqlParameters);
-
         if ($stmt = $this->connectionController->connection->prepare($sqlStatement)) {
             if (isset($sqlParameters) && sizeof($sqlParameters) > 0){
                 $this->bindParameters($stmt, $sqlParameters);
@@ -367,8 +363,6 @@ class mySqlDataController extends dataController{
             if ($this->connectionController->connection->error){
                 $this->cryogen->log($this->connectionController->connection->error, $sqlStatement, $sqlParameters);
             }
-
-            $this->cryogen->logScriptResult($log);
 
             $stmt->close();
         }
