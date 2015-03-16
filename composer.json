@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-	 "CarloNicora/cryogen": "1.0.*"
+	 "CarloNicora/cryogen": "dev-master"
     },
     "require-dev": {
     },
