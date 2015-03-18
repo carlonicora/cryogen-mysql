@@ -25,31 +25,123 @@ namespace CarloNicora\cryogen\mySqlCryogen;
 use CarloNicora\cryogen\structureController;
 use CarloNicora\cryogen\metaField;
 use CarloNicora\cryogen\metaTable;
+use mysqli_stmt;
 
+/**
+ * Implements the cryogen structure controller for MySql
+ *
+ */
 class mySqlStructureController extends structureController{
-    /** @var  $connectionController mySqlConnectionController */
+    /**
+     * @var mySqlConnectionController $connectionController
+     */
     protected $connectionController;
+
+    /**
+     * @var mysqlCryogen cryogen
+     */
     protected $cryogen;
 
-
-
-    public function __construct($connectionController, $cryogen){
+    /**
+     * Initialises the structure controller class
+     *
+     * @param mySqlConnectionController $connectionController
+     * @param mySqlCryogen $cryogen
+     */
+    public function __construct(mySqlConnectionController $connectionController, mySqlCryogen $cryogen){
         $this->connectionController = $connectionController;
         $this->cryogen = $cryogen;
     }
 
-    public function createView($viewSql){
-        $this->connectionController->connection->query($viewSql);
+    /**
+     * Returns the structure of all the tables in the connected database
+     *
+     * @return array
+     */
+    public function readStructure(){
+        /**
+         * @var mysqli_stmt $statement
+         */
+        $returnValue = [];
+
+        $this->connectionController->connect();
+
+        $tableName = null;
+
+        $sqlStatement = "SHOW TABLES FROM " . $this->connectionController->getDatabaseName();
+        if ($statement = $this->connectionController->connection->prepare($sqlStatement)) {
+            $statement->execute();
+            $statement->bind_result($tableName);
+            while ($statement->fetch()){
+                $metaTable = new metaTable($tableName, $tableName);
+                $returnValue[] = $metaTable;
+                $metaTable = NULL;
+            }
+            $statement->close();
+        }
+
+        /** @var metaTable $metaTable */
+        foreach ($returnValue as $metaTable){
+            /** @var metaTable $readMetaTable */
+            $readMetaTable = $this->readTableStructure($metaTable->name);
+
+            $metaTable->fields = $readMetaTable->fields;
+        }
+        return($returnValue);
     }
 
     /**
-     * @param $metaTable metaTable
-     * @param bool $isFederated
-     * @param null $federatedLink
-     * @return bool|void
+     * Read the structure of a table from the database and returns the metaTable object
+     *
+     * @param $tableName
+     * @return metaTable
      */
-    public function createTable($metaTable, $isFederated = FALSE, $federatedLink = NULL){
+    public function readTableStructure($tableName){
+        /**
+         * @var mysqli_stmt $statement
+         */
+        $returnValue = new metaTable($tableName, $tableName);
 
+        $sqlStatement = "DESCRIBE " . $tableName;
+
+        $name = $type = $null = $key = $default = $extra = null;
+
+        if ($statement = $this->connectionController->connection->prepare($sqlStatement)) {
+            $statement->execute();
+            $statement->bind_result($name, $type, $null, $key, $default, $extra);
+            $position = 0;
+            while ($statement->fetch()){
+                $size=stristr($type, "(");
+                $type = substr($type, 0, strlen($type) - strlen($size));
+                $size = substr($size, 1, strlen($size)-2);
+                $returnValue->fields[] = new metaField($position, $name, $type, $size, $key=="PRI", $extra=="auto_increment");
+                $position++;
+            }
+            $statement->close();
+        }
+
+        return($returnValue);
+    }
+
+    /**
+     * Creates a view based on the specified sql code
+     *
+     * @param $viewSql
+     * @return bool
+     */
+    public function createView($viewSql){
+        return($this->connectionController->connection->query($viewSql));
+    }
+
+    /**
+     * Creates a table on the database using the meta table passed as parameter
+     *
+     * @param metaTable $metaTable
+     * @param bool $isFederated
+     * @param string $federatedLink
+     * @return bool
+     */
+    public function createTable(metaTable $metaTable, $isFederated=false, $federatedLink=null){
         $sqlQuery = "CREATE TABLE " . $metaTable->name . "(";
 
         foreach ($metaTable->fields as $metaField){
@@ -83,86 +175,21 @@ class mySqlStructureController extends structureController{
         }
         $sqlQuery .= ";";
 
-        $this->connectionController->connection->query($sqlQuery);
+        $returnValue = $this->connectionController->connection->query($sqlQuery);
+
+        return($returnValue);
     }
 
     /**
+     * Updates a table on the database using the meta table passed as parameter
+     *
      * @param metaTable $metaTable
      * @return bool
-     */
-    public function updateTable($metaTable){
-        /**
-         * @var bool $returnValue
-         * @var metaTable $dbTable
-         * @var metaField $metaField
-         * @var metaField $dbField
-         */
-        $returnValue = false;
-
-        $dbTable = $this->readTableStructure($metaTable->name);
-
-        foreach ($metaTable->fields as $metaField){
-            $dbField = $dbTable->fields->getFieldByName($metaField->name);
-        }
-
-        return($returnValue);
-    }
-
-    public function readStructure(){
-        $returnValue = [];
-
-        $this->connectionController->connect();
-
-        $tableName = null;
-
-        $sqlStatement = "SHOW TABLES FROM " . $this->connectionController->getDatabaseName();
-        if ($stmt = $this->connectionController->connection->prepare($sqlStatement)) {
-            $stmt->execute();
-            $stmt->bind_result($tableName);
-            while ($stmt->fetch()){
-                $metaTable = new metaTable($tableName, $tableName);
-                $returnValue[] = $metaTable;
-                $metaTable = NULL;
-            }
-            $stmt->close();
-        }
-
-        /** @var metaTable $metaTable */
-        foreach ($returnValue as $metaTable){
-            /** @var metaTable $readMetaTable */
-            $readMetaTable = $this->readTableStructure($metaTable->name);
-
-            $metaTable->fields = $readMetaTable->fields;
-        }
-        return($returnValue);
-    }
-
-    /**
-     * Read the structure of a table from the database and returns the metaTable object
      *
-     * @param $tableName
-     * @return metaTable
+     * @todo Implement the method
      */
-    public function readTableStructure($tableName){
-        $returnValue = new metaTable($tableName, $tableName);
-
-        $sqlStatement = "DESCRIBE " . $tableName;
-
-        $name = $type = $null = $key = $default = $extra = null;
-
-        if ($stmt = $this->connectionController->connection->prepare($sqlStatement)) {
-            $stmt->execute();
-            $stmt->bind_result($name, $type, $null, $key, $default, $extra);
-            $position = 0;
-            while ($stmt->fetch()){
-                $size=stristr($type, "(");
-                $type = substr($type, 0, strlen($type) - strlen($size));
-                $size = substr($size, 1, strlen($size)-2);
-                $returnValue->fields[] = new metaField($position, $name, $type, $size, $key=="PRI", $extra=="auto_increment");
-                $position++;
-            }
-            $stmt->close();
-        }
+    public function updateTable(metaTable $metaTable){
+        $returnValue = false;
 
         return($returnValue);
     }
