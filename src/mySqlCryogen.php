@@ -16,6 +16,7 @@
  *
  * @license Apache
  * @license http://www.apache.org/licenses/LICENSE-2.0
+ * @package CarloNicora\cryogen\mySqlCryogen
  * @author Carlo Nicora
  */
 namespace CarloNicora\cryogen\mySqlCryogen;
