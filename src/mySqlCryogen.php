@@ -406,6 +406,9 @@ class mySqlCryogen extends cryogen{
                     if (isset($this->connectionController->connection->error) && $this->connectionController->connection->error != '') {
                         $exception = new cryogenException(cryogenException::ERROR_RUNNING_UPDATE_QUERY, 'error: ' . $this->connectionController->connection->error);
                         $exception->log();
+                    } else {
+                        $exception = new cryogenException(cryogenException::ERROR_RUNNING_UPDATE_QUERY, 'Generic Error running: '.$sqlStatement.' with '.json_encode($sqlParameters));
+                        $exception->log();
                     }
                 }
             }
