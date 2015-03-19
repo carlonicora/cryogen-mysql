@@ -255,6 +255,7 @@ class mySqlCryogen extends cryogen{
          * @var array $sqlParameters;
          */
         $this->connectionController->connect();
+        $originalEngine = $engine;
 
         try{
             $sqlStatement = $engine->generateReadStatement();
@@ -317,7 +318,7 @@ class mySqlCryogen extends cryogen{
             }
         } else {
             if (sizeof($returnValue) > 0){
-                $returnValue->meta = $engine->meta;
+                $returnValue->meta = $originalEngine->meta;
             } else {
                 $returnValue = NULL;
             }
