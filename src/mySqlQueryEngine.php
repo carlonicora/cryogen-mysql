@@ -94,7 +94,7 @@ class mySqlQueryEngine extends queryEngine{
      * @return string
      */
     public function generateUpdateStatement(){
-        $returnValue = 'UPDATE '.$this->meta->name.' SET '.$this->getNormalUpdateFields().' WHERE '.$this->getKeyUpdateFields().';';
+        $returnValue = 'UPDATE '.$this->meta->name.' SET '.$this->getUpdatedFields().' WHERE '.$this->getKeyUpdateFields().';';
 
         return($returnValue);
     }
@@ -105,6 +105,9 @@ class mySqlQueryEngine extends queryEngine{
      * @return array
      */
     public function generateUpdateParameters(){
+        /**
+         * @var discriminant $discriminant
+         */
         $returnValue = [];
 
         $returnValue[0] = '';
@@ -113,19 +116,28 @@ class mySqlQueryEngine extends queryEngine{
             if (!isset($returnValue[1])){
                 $returnValue[1] = [];
             }
+            foreach ($this->keyFields as $discriminant){
+                if ($discriminant->isChanged) {
+                    $returnValue[0] .= $this->getDiscriminantTypeCast($discriminant->metaField);
+                    $returnValue[1][] = $discriminant->value;
+                }
+            }
             foreach ($this->normalFields as $discriminant){
-                $returnValue[0] .= $this->getDiscriminantTypeCast($discriminant->metaField);
-                $returnValue[1][] = $discriminant->value;
+                if ($discriminant->isChanged) {
+                    $returnValue[0] .= $this->getDiscriminantTypeCast($discriminant->metaField);
+                    $returnValue[1][] = $discriminant->value;
+                }
             }
         }
 
         if (isset($this->keyFields) && sizeof($this->keyFields) > 0){
-            if (!isset($returnValue[1])){
-                $returnValue[1] = [];
-            }
             foreach ($this->keyFields as $discriminant){
                 $returnValue[0] .= $this->getDiscriminantTypeCast($discriminant->metaField);
-                $returnValue[1][] = $discriminant->value;
+                if ($discriminant->isChanged){
+                    $returnValue[1][] = $discriminant->originalValue;
+                } else {
+                    $returnValue[1][] = $discriminant->value;
+                }
             }
         }
 
@@ -437,11 +449,21 @@ class mySqlQueryEngine extends queryEngine{
      *
      * @return string
      */
-    private function getNormalUpdateFields(){
+    private function getUpdatedFields(){
+        /**
+         * @var discriminant $discriminant
+         */
         $returnValue = '';
 
+        foreach ($this->keyFields as $discriminant){
+            if ($discriminant->isChanged){
+                $returnValue .= $discriminant->metaField->name . $discriminant->clause . '?, ';
+            }
+        }
         foreach($this->normalFields as $discriminant){
-            $returnValue .= $discriminant->metaField->name . $discriminant->clause . '?, ';
+            if ($discriminant->isChanged){
+                $returnValue .= $discriminant->metaField->name . $discriminant->clause . '?, ';
+            }
         }
 
         $returnValue = substr($returnValue, 0, strlen($returnValue)-2);
