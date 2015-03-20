@@ -15,10 +15,9 @@
         }
     ],
     "require": {
-	 "carlo-nicora/cryogen": "2.0.*"
+	 "carlo-nicora/cryogen": "dev-master"
     },
     "require-dev": {
-      "carlo-nicora/cryogen": "dev-master"
     },
     "autoload": {
         "psr-4": {
