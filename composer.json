@@ -1,11 +1,11 @@
 {
-    "name": "CarloNicora/cryogen/mySqlCryogen",
+    "name": "carlo-nicora/cryogen-mysql",
     "description": "mySqlCryogen is a plugin to manage MySql databases with cryogen",
     "type": "library",
     "keywords": ["cryogen", "php", "database", "persistency layer", "persistency", "MySql"],
     "homepage": "http://carlonicora.com",
     "time": "2015-03-16",
-    "license": "Apache License 2.0",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Carlo Nicora",
@@ -15,9 +15,10 @@
         }
     ],
     "require": {
-	 "CarloNicora/cryogen": "dev-master"
+	 "carlo-nicora/cryogen": "2.0.*"
     },
     "require-dev": {
+      "carlo-nicora/cryogen": "dev-master"
     },
     "autoload": {
         "psr-4": {
