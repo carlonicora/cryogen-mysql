@@ -558,7 +558,7 @@ class mySqlCryogen extends cryogen{
      * @param $parameters
      */
     private function bindParameters(&$statement, $parameters) {
-        if (isset($parameters) && sizeof($parameters) > 0) {
+        if (isset($parameters) && sizeof($parameters) > 1) {
             $paramString = array_shift($parameters);
 
             $bindParams[] = $paramString;
