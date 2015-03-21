@@ -122,7 +122,7 @@ class mySqlCryogen extends cryogen{
                     $sqlStatement = $entity->status() == entity::ENTITY_NOT_RETRIEVED ? $engine->generateInsertStatement() : $engine->generateUpdateStatement();
                     $sqlParameters = $entity->status() == entity::ENTITY_NOT_RETRIEVED ? $engine->generateInsertParameters() : $engine->generateUpdateParameters();
 
-                    if (entity::ENTITY_NOT_RETRIEVED && $engine->hasAutoIncrementKey()){
+                    if ($entity->status() == entity::ENTITY_NOT_RETRIEVED && $engine->hasAutoIncrementKey()){
                         $keyField = $engine->getAutoIncrementKeyName();
                         $entity->$keyField = true;
                         $returnValue = $this->setActionTransaction($sqlStatement, $sqlParameters, false, $entity->$keyField);
