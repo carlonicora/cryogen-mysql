@@ -162,11 +162,11 @@ class mySqlCryogen extends cryogen{
     /**
      * Deletes an entity in the database.
      *
-     * @param entity $entity
+     * @param entity|entityList $entity
      * @param queryEngine|null $engine
      * @return bool
      */
-    public function delete(entity $entity=null, queryEngine $engine=null){
+    public function delete($entity=null, queryEngine $engine=null){
         /**
          * @var array $sqlParameters;
          */
