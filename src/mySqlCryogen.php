@@ -293,7 +293,7 @@ class mySqlCryogen extends cryogen{
                         eval("\$childFieldName = " . $relation->linkedTable . "::\$" . $relation->linkedField . "->name;");
 
                         foreach($returnValue as $parentEntity){
-                            foreach ($childrenEntities as $childEntity){
+                            foreach (isset($childrenEntities) ? $childrenEntities : [] as $childEntity){
                                 $isFine = $parentEntity->$parentFieldName == $childEntity->$childFieldName;
                                 if ($isFine){
                                     if ($relation->relationType == 0){
