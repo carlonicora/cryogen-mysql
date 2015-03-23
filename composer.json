@@ -15,7 +15,8 @@
         }
     ],
     "require": {
-	 "carlo-nicora/cryogen": "dev-master"
+	 "carlo-nicora/cryogen": "dev-master",
+      "carlo-nicora/cryogen-plsql": "dev-master"
     },
     "require-dev": {
     },
@@ -28,6 +29,10 @@
         {
             "type": "vcs",
             "url": "git@bitbucket.org:carlo_nicora/carlonicora-cryogen.git"
-        }
+        },
+      {
+        "type": "vcs",
+        "url": "git@bitbucket.org:carlo_nicora/carlonicora-plsqlcryogen.git"
+      }
     ]
 }
