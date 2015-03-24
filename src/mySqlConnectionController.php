@@ -33,22 +33,9 @@ use mysqli;
  */
 class mySqlConnectionController extends connectionController{
     /**
-     * @var mysqli $this->connection
+     * @var mySqlConnectionBuilder $connectionValues
      */
-
-    /**
-     * Stores the connection details in the connection controller and opens the connection to the database
-     *
-     * @param array $connectionString
-     * @return bool
-     */
-    public function initialize($connectionString){
-        $this->connectionString = $connectionString;
-
-        $returnValue = $this->connect();
-
-        return($returnValue);
-    }
+    public $connectionValues;
 
     /**
      * Opens a connection to the database
@@ -59,17 +46,17 @@ class mySqlConnectionController extends connectionController{
         $returnValue = true;
 
         if (!isset($this->connection)) {
-            if (isset($this->connectionString[3])){
-                @$this->connection = new mysqli($this->connectionString[0], $this->connectionString[1], $this->connectionString[2], $this->connectionString[3]);
+            if (isset($this->connectionValues->databaseName)){
+                @$this->connection = new mysqli($this->connectionValues->host, $this->connectionValues->user, $this->connectionValues->password, $this->connectionValues->databaseName);
             } else {
-                @$this->connection = new mysqli($this->connectionString[0], $this->connectionString[1], $this->connectionString[2]);
+                @$this->connection = new mysqli($this->connectionValues->host, $this->connectionValues->user, $this->connectionValues->password);
             }
         } else {
             if (!isset($this->connection->thread_id)) {
-                if (isset($this->connectionString[3])) {
-                    @$this->connection->connect($this->connectionString[0], $this->connectionString[1], $this->connectionString[2], $this->connectionString[3]);
+                if (isset($this->connectionValues->databaseName)) {
+                    @$this->connection->connect($this->connectionValues->host, $this->connectionValues->user, $this->connectionValues->password, $this->connectionValues->databaseName);
                 } else {
-                    @$this->connection->connect($this->connectionString[0], $this->connectionString[1], $this->connectionString[2]);
+                    @$this->connection->connect($this->connectionValues->host, $this->connectionValues->user, $this->connectionValues->password);
                 }
             }
         }
@@ -102,7 +89,7 @@ class mySqlConnectionController extends connectionController{
      * @return string
      */
     public function getDatabaseName(){
-        return($this->connectionString[3]);
+        return($this->connectionValues->databaseName);
     }
 
     /**
