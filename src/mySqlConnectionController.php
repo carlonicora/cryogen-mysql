@@ -35,7 +35,7 @@ class mySqlConnectionController extends connectionController{
     /**
      * @var mySqlConnectionBuilder $connectionValues
      */
-    private $connectionValues;
+    public $connectionValues;
 
     /**
      * Opens a connection to the database
