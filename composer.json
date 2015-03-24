@@ -2,7 +2,6 @@
   "name": "carlo-nicora/cryogen-mysql",
   "description": "mySqlCryogen is a plugin to manage MySql databases with cryogen",
   "type": "library",
-  "version": "2.1.0",
   "keywords": [
     "cryogen",
     "php",
