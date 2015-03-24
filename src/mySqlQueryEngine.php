@@ -22,13 +22,13 @@
 
 namespace CarloNicora\cryogen\mySqlCryogen;
 
-use CarloNicora\cryogen\plSqlCryogen\plSqlQueryEngine;
+use CarloNicora\cryogen\SQL\sqlQueryEngine;
 use CarloNicora\cryogen\metaField;
 
 /**
  * The mySqlQueryEngine specialises the queryEngine to prepare the SQL queries specifically for MySql
  */
-class mySqlQueryEngine extends plSqlQueryEngine{
+class mySqlQueryEngine extends sqlQueryEngine{
     /**
      * Returns the type of field to be passed as type of parameters to mySql for the sql query preparation
      *

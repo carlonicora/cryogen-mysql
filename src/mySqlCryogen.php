@@ -24,7 +24,7 @@ namespace CarloNicora\cryogen\mySqlCryogen;
 use CarloNicora\cryogen\cryogenException;
 use CarloNicora\cryogen\entity;
 use CarloNicora\cryogen\entityList;
-use CarloNicora\cryogen\plSqlCryogen\plSqlCryogen;
+use CarloNicora\cryogen\SQL\sqlCryogen;
 use CarloNicora\cryogen\queryEngine;
 use CarloNicora\cryogen\metaTable;
 use mysqli_stmt;
@@ -35,18 +35,18 @@ use Exception;
  *
  * @package CarloNicora\cryogen\mySqlCryogen
  */
-class mySqlCryogen extends plSqlCryogen{
+class mySqlCryogen extends sqlCryogen{
     /**
      * Initialises cryogen for MySql
      *
-     * @param array $connectionString
+     * @param mySqlConnectionBuilder $connection
      */
-    public function __construct($connectionString){
+    public function __construct($connection){
         $returnValue = false;
 
         $this->connectionController = new mySqlConnectionController();
 
-        if ($this->connectionController->initialize($connectionString)){
+        if ($this->connectionController->initialize($connection)){
             $this->structureController = new mySqlStructureController($this->connectionController, $this);
             $returnValue = true;
         }
