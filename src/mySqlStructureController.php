@@ -193,5 +193,33 @@ class mySqlStructureController extends structureController{
 
         return($returnValue);
     }
+
+    /**
+     * Drops a table from the database using the meta table passed as parameter
+     *
+     * @param metaTable $metaTable
+     * @return bool
+     */
+    public function dropTable(metaTable $metaTable){
+        $sqlQuery = 'DROP TABLE ' . $metaTable->name . ';';
+
+        $returnValue = $this->connectionController->connection->query($sqlQuery);
+
+        return($returnValue);
+    }
+
+    /**
+     * Truncates a table on the database using the meta table passed as parameter
+     *
+     * @param metaTable $metaTable
+     * @return bool
+     */
+    public function truncateTable(metaTable $metaTable){
+        $sqlQuery = 'TRUNCATE TABLE ' . $metaTable->name . ';';
+
+        $returnValue = $this->connectionController->connection->query($sqlQuery);
+
+        return($returnValue);
+    }
 }
 ?>
