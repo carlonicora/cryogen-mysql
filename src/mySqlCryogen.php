@@ -219,8 +219,8 @@ class mySqlCryogen extends sqlCryogen{
                 } else {
                     throw new cryogenException(cryogenException::ERROR_BINDING_OBJECT_TO_TABLE_PARAMETERS, 'database table: '.$engine->meta->name.' - database object: '.$engine->meta->object);
                 }
-
             }
+            $this->connectionController->connection->commit();
         } else {
             throw new cryogenException(cryogenException::ERROR_PREPARING_SQL_STATEMENT, 'error: '.$this->connectionController->connection->error.'-running sql:'.$sqlStatement.'-with parameters:'.json_encode($sqlParameters));
         }
@@ -253,6 +253,8 @@ class mySqlCryogen extends sqlCryogen{
         } else {
             throw new cryogenException(cryogenException::ERROR_PREPARING_SQL_STATEMENT, 'error: '.$this->connectionController->connection->error.'-running sql:'.$sqlStatement.'-with parameters:'.json_encode($sqlParameters));
         }
+
+        $this->connectionController->connection->commit();
 
         return($returnValue);
     }
