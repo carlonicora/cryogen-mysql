@@ -32,10 +32,10 @@ class mySqlQueryEngine extends sqlQueryEngine{
     /**
      * Returns the type of field to be passed as type of parameters to mySql for the sql query preparation
      *
-     * @param metaField $field
+     * @param mixed $field
      * @return string
      */
-    protected function getDiscriminantTypeCast(metaField $field){
+    protected function getDiscriminantTypeCast($field=null){
         switch ($field->type){
             case 'int':
             case 'tinyint':
