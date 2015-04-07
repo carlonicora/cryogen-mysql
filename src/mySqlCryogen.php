@@ -55,6 +55,17 @@ class mySqlCryogen extends sqlCryogen{
     }
 
     /**
+     * Returns if a database exists
+     *
+     * @param string $databaseName
+     * @return bool
+     */
+    public function databaseExists($databaseName){
+        $returnValue = $this->connectionController->connection->select_db($databaseName);
+        return($returnValue);
+    }
+
+    /**
      * @param metaTable|null $meta
      * @param entity|null $entity
      * @param null $valueOfKeyField
