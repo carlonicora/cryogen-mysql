@@ -258,7 +258,9 @@ class mySqlCryogen extends sqlCryogen{
             $statement->execute();
             $statement->store_result();
 
-            $returnValue = $statement->num_rows;
+            $statement->bind_result($returnValue);
+
+            $statement->fetch();
 
             $statement->close();
         } else {
