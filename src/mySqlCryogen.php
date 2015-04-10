@@ -109,7 +109,7 @@ class mySqlCryogen extends sqlCryogen{
 
             try {
                 $statement->execute();
-                $returnValue =  $statement->affected_rows > 0;
+                $returnValue =  $statement->affected_rows > 0 || $this->connectionController->connection->sqlstate == '00000';
             } catch (Exception $systemException){
                 $exception = new cryogenException(cryogenException::ERROR_RUNNING_UPDATE_QUERY, 'error: '.$this->connectionController->connection->error);
                 $exception->log();
