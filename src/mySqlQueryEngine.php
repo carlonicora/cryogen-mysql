@@ -48,6 +48,7 @@ class mySqlQueryEngine extends sqlQueryEngine{
                 break;
             case 'text':
             case 'varchar':
+            case 'char':
                 $returnValue = 's';
                 break;
             default:
