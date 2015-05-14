@@ -22,7 +22,7 @@
     }
   ],
   "require": {
-    "carlo-nicora/cryogen": ">=2.1.0"
+    "carlo-nicora/cryogen": ">=2.2.0"
   },
   "require-dev": {
   },
