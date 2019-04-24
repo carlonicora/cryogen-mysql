@@ -49,6 +49,7 @@ class mySqlQueryEngine extends sqlQueryEngine{
             case 'text':
             case 'varchar':
             case 'char':
+            case 'timestamp':
                 $returnValue = 's';
                 break;
             default:
