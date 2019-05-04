@@ -1,5 +1,5 @@
 {
-  "name": "carlo-nicora/cryogen-mysql",
+  "name": "carlonicora/mysqlcryogen",
   "description": "mySqlCryogen is a plugin to manage MySql databases with cryogen",
   "type": "library",
   "keywords": [
@@ -22,19 +22,19 @@
     }
   ],
   "require": {
-    "carlo-nicora/cryogen": ">=2.1.0"
+    "carlonicora/cryogen": "dev-master"
   },
   "require-dev": {
   },
   "autoload": {
     "psr-4": {
-      "CarloNicora\\cryogen\\mySqlCryogen\\": "src/"
+      "carlonicora\\cryogen\\mysqlcryogen\\": "src/"
     }
   },
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@bitbucket.org:carlo_nicora/carlonicora-cryogen.git"
+      "url": "https://carlo_nicora@bitbucket.org/carlo_nicora/carlonicora-cryogen.git"
     }
   ]
 }

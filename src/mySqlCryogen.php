@@ -16,24 +16,24 @@
  *
  * @license Apache
  * @license http://www.apache.org/licenses/LICENSE-2.0
- * @package CarloNicora\cryogen\mySqlCryogen
+ * @package carlonicora\cryogen\mysqlcryogen
  * @author Carlo Nicora
  */
-namespace CarloNicora\cryogen\mySqlCryogen;
+namespace carlonicora\cryogen\mysqlcryogen;
 
-use CarloNicora\cryogen\cryogenException;
-use CarloNicora\cryogen\entity;
-use CarloNicora\cryogen\entityList;
-use CarloNicora\cryogen\SQL\sqlCryogen;
-use CarloNicora\cryogen\queryEngine;
-use CarloNicora\cryogen\metaTable;
+use carlonicora\cryogen\cryogenException;
+use carlonicora\cryogen\entity;
+use carlonicora\cryogen\entityList;
+use carlonicora\cryogen\SQL\sqlCryogen;
+use carlonicora\cryogen\queryEngine;
+use carlonicora\cryogen\metaTable;
 use mysqli_stmt;
 use Exception;
 
 /**
  * Main class for the MySql plugin for cryogen
  *
- * @package CarloNicora\cryogen\mySqlCryogen
+ * @package carlonicora\cryogen\mysqlcryogen
  */
 class mySqlCryogen extends sqlCryogen{
     /**

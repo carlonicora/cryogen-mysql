@@ -16,15 +16,15 @@
  *
  * @license Apache
  * @license http://www.apache.org/licenses/LICENSE-2.0
- * @package CarloNicora\cryogen\mySqlCryogen;
+ * @package carlonicora\cryogen\mysqlcryogen;
  * @author Carlo Nicora
  */
 
-namespace CarloNicora\cryogen\mySqlCryogen;
+namespace carlonicora\cryogen\mysqlcryogen;
 
-use CarloNicora\cryogen\structureController;
-use CarloNicora\cryogen\metaField;
-use CarloNicora\cryogen\metaTable;
+use carlonicora\cryogen\structureController;
+use carlonicora\cryogen\metaField;
+use carlonicora\cryogen\metaTable;
 use mysqli_stmt;
 
 /**

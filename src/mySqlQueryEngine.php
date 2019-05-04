@@ -16,14 +16,13 @@
  *
  * @license Apache
  * @license http://www.apache.org/licenses/LICENSE-2.0
- * @package CarloNicora\cryogen\mySqlCryogen
+ * @package carlonicora\cryogen\mysqlcryogen
  * @author Carlo Nicora
  */
 
-namespace CarloNicora\cryogen\mySqlCryogen;
+namespace carlonicora\cryogen\mysqlcryogen;
 
-use CarloNicora\cryogen\SQL\sqlQueryEngine;
-use CarloNicora\cryogen\metaField;
+use carlonicora\cryogen\SQL\sqlQueryEngine;
 
 /**
  * The mySqlQueryEngine specialises the queryEngine to prepare the SQL queries specifically for MySql

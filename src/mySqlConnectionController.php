@@ -16,24 +16,24 @@
  *
  * @license Apache
  * @license http://www.apache.org/licenses/LICENSE-2.0
- * @package CarloNicora\cryogen\mySqlCryogen
+ * @package carlonicora\cryogen\mysqlcryogen
  * @author Carlo Nicora
  */
 
-namespace CarloNicora\cryogen\mySqlCryogen;
+namespace carlonicora\cryogen\mysqlcryogen;
 
-use CarloNicora\cryogen\connectionController;
-use CarloNicora\cryogen\cryogenException;
+use carlonicora\cryogen\connectionController;
+use carlonicora\cryogen\cryogenException;
 use mysqli;
 
 /**
  * Implementation of the connection controller for MySql
  *
- * @package CarloNicora\cryogen\mySqlCryogen
+ * @package carlonicora\cryogen\mysqlcryogen
  */
 class mySqlConnectionController extends connectionController{
     /**
-     * @var mySqlConnectionBuilder $connectionValues
+     * @var mySqlConnectionBuilder $connmysqlcryogenectionValues
      */
     public $connectionValues;
 
@@ -81,6 +81,8 @@ class mySqlConnectionController extends connectionController{
         if($this->isConnected()){
             $this->connection->close();
         }
+
+        return(true);
     }
 
     /**
