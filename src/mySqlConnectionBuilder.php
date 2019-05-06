@@ -55,7 +55,7 @@ class mySqlConnectionBuilder extends connectionBuilder{
      * @param array $connectionValues
      */
     public function initialise($connectionValues){
-        $this->databaseType = 'mySql';
+        $this->databaseType = 'mysql';
 
         $this->host = $connectionValues['host'];
         $this->user = $connectionValues['user'];
