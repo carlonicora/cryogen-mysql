@@ -11,7 +11,7 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://carlo_nicora@bitbucket.org/carlo_nicora/carlonicora-cryogen.git"
+      "url": "https://bitbucket.org/carlo_nicora/carlonicora-cryogen.git"
     }
   ]
 }
