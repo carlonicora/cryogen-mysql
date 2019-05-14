@@ -222,4 +222,3 @@ class mySqlStructureController extends structureController{
         return($returnValue);
     }
 }
-?>

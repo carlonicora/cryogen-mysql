@@ -1,17 +1,27 @@
 {
   "name": "carlonicora/mysqlcryogen",
+  "description": "MySQL PHP ORM for cryogen",
+  "version": "3.0.1",
+  "type": "library",
+  "homepage": "https://carlonicora.com",
+  "time": "2019-05-14",
+  "authors": [
+    {
+      "name": "Carlo Nicora",
+      "email": "carlo@carlonicora.com",
+      "homepage": "http://carlonicora.com",
+      "role": "Developer"
+    }
+  ],
   "require": {
-    "carlonicora/cryogen": ">=4.0.0"
+    "carlonicora/cryogen": ">=4.0.0",
+    "php": "^7.0",
+    "ext-mysqli": "*",
+    "ext-json": "*"
   },
   "autoload": {
     "psr-4": {
       "carlonicora\\cryogen\\mysqlcryogen\\": "src/"
     }
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://bitbucket.org/carlo_nicora/carlonicora-cryogen.git"
-    }
-  ]
+  }
 }

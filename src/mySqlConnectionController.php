@@ -122,4 +122,3 @@ class mySqlConnectionController extends connectionController{
         return(isset($this->connection) && isset($this->connection->thread_id));
     }
 }
-?>

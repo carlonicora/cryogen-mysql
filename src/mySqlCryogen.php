@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
+
 /**
  * Copyright 2015 Carlo Nicora
  *
@@ -88,16 +89,6 @@ class mySqlCryogen extends sqlCryogen{
         }
     }
 
-    /**
-     * Runs the transactional INSERT, UPDATE or DELETE query on the database
-     *
-     * @param string $sqlStatement
-     * @param array $sqlParameters
-     * @param bool $isDelete
-     * @param bool $generatedId
-     * @return entityList
-     * @throws cryogenException
-     */
     protected function setActionTransaction($sqlStatement, $sqlParameters, $isDelete=false, &$generatedId = false){
         /**
          * @var mysqli_stmt $statement
@@ -306,4 +297,3 @@ class mySqlCryogen extends sqlCryogen{
         return $refs;
     }
 }
-?>
