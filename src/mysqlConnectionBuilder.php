@@ -28,7 +28,7 @@ use carlonicora\cryogen\connectionBuilder;
  *
  * @package carlonicora\cryogen\mysqlcryogen
  */
-class mySqlConnectionBuilder extends connectionBuilder{
+class mysqlConnectionBuilder extends connectionBuilder{
     /**
      * @var string
      */

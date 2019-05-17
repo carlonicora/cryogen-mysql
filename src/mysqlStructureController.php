@@ -31,9 +31,9 @@ use mysqli_stmt;
  * Implements the cryogen structure controller for MySql
  *
  */
-class mySqlStructureController extends structureController{
+class mysqlStructureController extends structureController{
     /**
-     * @var mySqlConnectionController $connectionController
+     * @var mysqlConnectionController $connectionController
      */
     protected $connectionController;
 
@@ -45,10 +45,10 @@ class mySqlStructureController extends structureController{
     /**
      * Initialises the structure controller class
      *
-     * @param mySqlConnectionController $connectionController
-     * @param mySqlCryogen $cryogen
+     * @param mysqlConnectionController $connectionController
+     * @param mysqlCryogen $cryogen
      */
-    public function __construct(mySqlConnectionController $connectionController, mySqlCryogen $cryogen){
+    public function __construct(mysqlConnectionController $connectionController, mysqlCryogen $cryogen){
         $this->connectionController = $connectionController;
         $this->cryogen = $cryogen;
     }

@@ -36,19 +36,19 @@ use Exception;
  *
  * @package carlonicora\cryogen\mysqlcryogen
  */
-class mySqlCryogen extends sqlCryogen{
+class mysqlCryogen extends sqlCryogen{
     /**
      * Initialises cryogen for MySql
      *
-     * @param mySqlConnectionBuilder $connection
+     * @param mysqlConnectionBuilder $connection
      */
     public function __construct($connection){
         $returnValue = false;
 
-        $this->connectionController = new mySqlConnectionController();
+        $this->connectionController = new mysqlConnectionController();
 
         if ($this->connectionController->initialize($connection)){
-            $this->structureController = new mySqlStructureController($this->connectionController, $this);
+            $this->structureController = new mysqlStructureController($this->connectionController, $this);
             $returnValue = true;
         }
 
@@ -73,7 +73,7 @@ class mySqlCryogen extends sqlCryogen{
      * @return mixed
      */
     public function generateQueryEngine(metaTable $meta=null, entity $entity=null, $valueOfKeyField=null){
-        $returnValue = new mySqlQueryEngine($meta, $entity, $valueOfKeyField);
+        $returnValue = new mysqlQueryEngine($meta, $entity, $valueOfKeyField);
 
         return($returnValue);
     }

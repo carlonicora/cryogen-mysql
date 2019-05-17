@@ -27,7 +27,7 @@ use carlonicora\cryogen\SQL\sqlQueryEngine;
 /**
  * The mySqlQueryEngine specialises the queryEngine to prepare the SQL queries specifically for MySql
  */
-class mySqlQueryEngine extends sqlQueryEngine{
+class mysqlQueryEngine extends sqlQueryEngine{
     /**
      * Returns the type of field to be passed as type of parameters to mySql for the sql query preparation
      *

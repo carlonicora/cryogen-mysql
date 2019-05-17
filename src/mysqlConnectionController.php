@@ -31,9 +31,9 @@ use mysqli;
  *
  * @package carlonicora\cryogen\mysqlcryogen
  */
-class mySqlConnectionController extends connectionController{
+class mysqlConnectionController extends connectionController{
     /**
-     * @var mySqlConnectionBuilder $connmysqlcryogenectionValues
+     * @var mysqlConnectionBuilder $connmysqlcryogenectionValues
      */
     public $connectionValues;
 
