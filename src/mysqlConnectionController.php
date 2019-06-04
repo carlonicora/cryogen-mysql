@@ -61,6 +61,8 @@ class mysqlConnectionController extends connectionController{
             }
         }
 
+        $this->connection->set_charset("utf8");
+
         if ($this->connection->connect_error) {
             $exception = new cryogenException(cryogenException::FAILURE_CREATING_DATABASE_CONNECTION, 'Connect Error: '. $this->connection->connect_errno.'-'.$this->connection->connect_error);
             $exception->log();
